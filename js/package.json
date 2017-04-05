@@ -1,0 +1,19 @@
+{
+  "name": "mongodb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "EmployeeDb.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Don Yoo",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "mongoose": "^4.8.6"
+  },
+  "repository" : { 
+   "type" : "git",
+   "url" : "https://github.com/DonYoo/SmartHome.git"
+ }
+}
