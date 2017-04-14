@@ -10,6 +10,16 @@ public class Controller implements ButtonListener
 {
    private LED led;
    private Button button;
+
+   /**
+    * Setup the Controller.
+    */
+   public Controller()
+   {
+       led = new LED(7);             // Create the LED at pin 7 controlled by this
+       button = new Button(4);       // Create the Button at pin 4 controlled by this
+       button.addListener(this);     // Make the button tell us when it has changed (See buttonChanged() Below)
+   }
    
    /**
     * To be called by the Button when it is pressed or released.
@@ -27,15 +37,6 @@ public class Controller implements ButtonListener
        }
    }
    
-   /**
-    * Setup the Controller.
-    */
-   public Controller()
-   {
-       led = new LED(7);             // Create the LED at pin 6 controlled by this
-       button = new Button(4);       // Create the Button at pin 7 controlled by this
-       button.addListener(this);     // Make the button tell us when it has changed (See buttonChanged() above)
-   }
    public void turnLEDOn()
    {
        led.on();

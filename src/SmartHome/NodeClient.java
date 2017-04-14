@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Random;
+import java.util.Scanner;
 
 public class NodeClient {
 
@@ -15,17 +16,21 @@ public class NodeClient {
 	private static int port = 3000; 
 	// socket object
 	private Socket socket = null; 
-	private PrintWriter out = null;
-	private BufferedReader in = null;
+	private PrintWriter out;
+	private BufferedReader	in;
 	private int ClientID = 0;
+	private String send_message = "";
+	private Controller raspberry;
+	
 	/**
 	 * default construction.<br>
 	 * if no input is defined connect to localhost:3000
 	 * @throws UnknownHostException
 	 * @throws ClassNotFoundException
 	 * @throws IOException
+	 * @throws InterruptedException 
 	 */
-	public NodeClient() throws UnknownHostException, IOException, ClassNotFoundException {
+	public NodeClient() throws UnknownHostException, IOException, ClassNotFoundException, InterruptedException {
 		this(ip, port);
 	}
 	
@@ -36,17 +41,27 @@ public class NodeClient {
 	 * @throws UnknownHostException
 	 * @throws IOException
 	 * @throws ClassNotFoundException
+	 * @throws InterruptedException 
 	 */
-	public NodeClient(String ipAddress, int portNumber)throws UnknownHostException, IOException, ClassNotFoundException { 
+	public NodeClient(String ipAddress, int portNumber)throws UnknownHostException, IOException, ClassNotFoundException, InterruptedException { 
+		// construct raspberry
+		raspberry = new Controller();
+		
 		Random RandomInt = new Random();
 		ClientID = RandomInt.nextInt(1000);
-		socketConnect(ipAddress, portNumber); 
+		socketConnect(ipAddress, portNumber);
+		receive();
 	} 
 	
 	// make the connection with the socket 
 	public void socketConnect(String ip, int port) throws UnknownHostException, IOException {
-		System.out.println("[Connecting to socket " + ip + ":" + port + "]"); 
-		socket = new Socket(ip, port); 
+		// Make connection
+		socket = new Socket(ip, port);
+		System.out.println("[Connecting to socket " + ip + ":" + port + "]");
+		
+		// in & out initialize streams
+		in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		out = new PrintWriter(socket.getOutputStream(), true);
 	}
 	
 	/**
@@ -56,34 +71,45 @@ public class NodeClient {
 	 */
 	// writes the full message int the socket (String) 
 	public void send(String message) throws IOException {
-			// out & in 
-			out = new PrintWriter(socket.getOutputStream(), true); 
-			// writes str in the socket and read 
-			String send_message = "From Client "+ClientID+": "+message;
-			out.println(send_message);
+
+		send_message = "From Client "+ClientID+": " + message;
+		out.println(send_message);
+		out.flush();	// flush data to output
 	} 
 	
-	public void receive() throws IOException {
+	public void receive() throws IOException, InterruptedException {
+		String response = "";
 		// get data from server.
-		in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		String returnStr = in .readLine();
-		System.out.println(returnStr);		
+		// tell server that inputstream is ready from pi.
+		while( !response.contains("SERVER>>> TERMINATE")){
+			response = in.readLine();
+			System.out.println(response);
+			activate_raspberry(response);
+		}       
 	}
 	
+	private void activate_raspberry(String recv_message) {
+		if(recv_message.contains("LED")){
+			raspberry.buttonChanged(true);
+		}
+	}
+
 	// get the socket instance 
 	public Socket getSocket() {
 		return socket; 
 	}
 	
-	public void closeAll() throws IOException{
+	// close all stream and socket.
+	public void closeAll() throws IOException, InterruptedException{
+		Thread.sleep(1000);
 		if(out != null){
 			out.close();
 		}
-		if(socket != null){
-			socket.close();
-		}
 		if(in != null){
 			in.close();
+		}
+		if(socket != null){
+			socket.close();
 		}
 	}
 

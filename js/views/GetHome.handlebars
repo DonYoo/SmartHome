@@ -1,0 +1,22 @@
+<div>
+	<div class="table-responsive">
+		<form method="post" action="/home">
+			<table class="table table-condensed">
+					<tbody>
+					<h3>Welcome to SmartHome</h3>
+					<p>
+						<!-- if button is clicked go to PostHome -->
+						<input type="submit" value="LED_On/Off" onclick="SendMsgtoRaspberrypi()">
+					</p>
+					<div id="future"></div>
+						<form id="form" id="chat_form">
+							<input id="chat_input" type="text">
+							<input type="submit" value="Send" onclick="SendMsgtoRaspberrypi()">
+						</form>
+					</tbody>
+				<tfooter>
+				</tfooter>
+			</table>
+		</form>
+	</div>
+</div>

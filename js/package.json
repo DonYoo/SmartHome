@@ -10,10 +10,12 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.1",
-    "mongoose": "^4.8.6"
+    "color": "^1.0.3",
+    "mongoose": "^4.8.6",
+    "underscore": "^1.8.3"
   },
-  "repository" : { 
-   "type" : "git",
-   "url" : "https://github.com/DonYoo/SmartHome.git"
- }
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DonYoo/SmartHome.git"
+  }
 }
