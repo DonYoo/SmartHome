@@ -84,7 +84,7 @@ public class NodeClient {
 		while( !response.contains("SERVER>>> TERMINATE")){
 			response = in.readLine();
 			System.out.println(response);
-			activate_raspberry(response);
+			//activate_raspberry(response);
 		}       
 	}
 	

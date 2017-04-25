@@ -12,6 +12,7 @@
     "body-parser": "^1.17.1",
     "color": "^1.0.3",
     "mongoose": "^4.8.6",
+    "node-uuid": "^1.4.8",
     "underscore": "^1.8.3"
   },
   "repository": {

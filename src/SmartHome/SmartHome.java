@@ -13,10 +13,25 @@ public class SmartHome {
 		
 		// Make a Client object.
 		//Controller raspberry1 = new Controller();
-		NodeClient client1 = new NodeClient("169.254.63.3", 2000);
+		final NodeClient client1 = new NodeClient("169.254.63.3", 2000);
  
 	    // writes and receives the message
 		client1.closeAll();
+		
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			public void run() {
+				try {
+					client1.closeAll();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		        System.out.println("Running Shutdown Hook");
+			}
+		});
 	}
 
 }

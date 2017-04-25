@@ -36,7 +36,7 @@ POST - Submits data to be processed to a specified resource
 */
 
 router.get('/home',               GetHome);
-router.post('/home',               PostHome);
+router.post('/home',              PostHome);
 
 
 /*

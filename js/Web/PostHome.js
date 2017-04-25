@@ -1,19 +1,17 @@
-var ToRaspberrypi = require('../Server4Pi');
+var LEDemitter = require('../SmartEventEmitter').LEDemitter;
 
-ToRaspberrypi.on('PiControl', function (args) {
-    console.log('From User Server:', args);
-
+LEDemitter.on('PiControl', function (args) {
     // trigger next step only if the PiControl args already handled.
     if (args.handled) {
-          console.log('From User Server:', args);
+          console.log('From User Server2:', args);
     }
 });
 
 
 module.exports = 
 function SendMsgtoRaspberrypi(req , res , next){
-    // Emit the Event
-    ToRaspberrypi.emit('PiControl', "LED");
+    console.log('From User Server:');
+    LEDemitter.LED();
     res.redirect('/home');
 };
 
