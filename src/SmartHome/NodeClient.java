@@ -45,7 +45,7 @@ public class NodeClient {
 	 */
 	public NodeClient(String ipAddress, int portNumber)throws UnknownHostException, IOException, ClassNotFoundException, InterruptedException { 
 		// construct raspberry
-		raspberry = new Controller();
+		//raspberry = new Controller();
 		
 		Random RandomInt = new Random();
 		ClientID = RandomInt.nextInt(1000);
