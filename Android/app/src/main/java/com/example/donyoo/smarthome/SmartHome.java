@@ -7,7 +7,12 @@ import android.view.View;
 import android.widget.EditText;
 
 public class SmartHome extends AppCompatActivity {
-    public static final String EXTRA_MESSAGE = "com.example.donyoo.SmartHome.MESSAGE";
+    private static final String EXTRA_MESSAGE = "com.example.donyoo.SmartHome.MESSAGE";
+
+    public static String getExtraMessage() {
+        return EXTRA_MESSAGE;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,12 +22,11 @@ public class SmartHome extends AppCompatActivity {
     /**
      * called when the user taps the send button
      */
-
     public void sendMessage(View view) {
         Intent intent = new Intent(this, DisplayMessageActivity.class);
         EditText editText = (EditText) findViewById(R.id.editText);
         String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
+        intent.putExtra(getExtraMessage(), message);
         startActivity(intent);
     }
 }

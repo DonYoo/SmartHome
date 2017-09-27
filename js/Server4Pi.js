@@ -1,6 +1,5 @@
 var net = require('net');
 var LEDemitter = require('./SmartEventEmitter').LEDemitter;
-
 const uuidV4 = require('uuid/v4');
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -23,7 +22,7 @@ var server = net.createServer(
 		var uniqueId = uuidV4();
 		PiInfo[uniqueId] = {"name" : uniqueId, "room": roomID};
 
-		console.log("Raspberrypi connected...");		
+		console.log("Raspberrypi connected..."+ uniqueId);		
 		socket.write("Hello from server\n"+	// \n for flush
 		"Your id is" + uniqueId + "\n");	// \n for flush
 		Raspberrypi.push(socket);
@@ -47,7 +46,7 @@ var server = net.createServer(
 
 		// if raspberrypi disconnected.in
 		socket.on('end', function(){
-			console.log("Raspberrypi disconnected...");
+			console.log("Raspberrypi disconnected..." + uniqueId);
 			// remove socket from list of Raspberrypi
 			var index = Raspberrypi.indexOf(socket);
 			if (index != -1) {
@@ -69,13 +68,13 @@ var server = net.createServer(
 		});
 
 		function sendOnOff(args){
-			console.log(Raspberrypi.length);
+			console.log("Number of Pi : " + Raspberrypi.length);
 			console.log('From Pi Server:', args);
 			socket.write(args.toString() + '\n');		//flush with next line
 			args.handled = true;
 		}
 		// Add Subscriber ( get the emit from the Server4Users/PostHome.js )
-		LEDemitter.on('LED', sendOnOff);
+		LEDemitter.on('PiControl', sendOnOff);
 });
 
 

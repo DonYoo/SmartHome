@@ -36,8 +36,6 @@ mongoose.Promise = global.Promise;	// this is for removing warnings.
 //var connection = mongoose.createConnection(dbUrl);
 mongoose.connect(dbUrl);
 
-
-var app = express();
 // setup handlebars view engine
 app.engine('handlebars', 
     handlebars({defaultLayout: 'main_logo'}));

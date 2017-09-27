@@ -13,8 +13,16 @@ inherits(SmartEmitter, EventEmitter);
 SmartEmitter.prototype.LED = function (number) {
     //console.log(projectId);
     // Emit the Event
-    this.emit('LED', 'LED');
+    this.emit('PiControl', 'LED');
 };
+
+// Sample member function that raises an event
+SmartEmitter.prototype.TERMINATE = function (number) {
+    //console.log(projectId);
+    // Emit the Event
+    this.emit('TERMINATE', 'TERMINATE');
+};
+
 var LEDemitter = new SmartEmitter();
 module.exports.LEDemitter = LEDemitter;
 

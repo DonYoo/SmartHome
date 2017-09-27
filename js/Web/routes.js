@@ -35,8 +35,6 @@ var GetProfile              = require("./profile").GetProfile;
 var GetUnlinkLocal          = require("./profile").GetUnlinkLocal;
 var GetUnlinkFacebook       = require("./profile").GetUnlinkFacebook;
 
-
-
 /*
 GET  - Requests data from a specified resource
 POST - Submits data to be processed to a specified resource
