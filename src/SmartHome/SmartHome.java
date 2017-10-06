@@ -14,8 +14,9 @@ public class SmartHome {
 		// Make a Client object.
 		//Controller raspberry1 = new Controller();
 		//final NodeClient client1 = new NodeClient("169.254.63.3", 2000);
-		final NodeClient client1 = new NodeClient("localhost", 2000);
- 
+		//final NodeClient client1 = new NodeClient("localhost", 2000);
+		final NodeClient client1 = new NodeClient("52.40.177.51", 2000);
+		
 	    // writes and receives the message
 		client1.closeAll();
 		

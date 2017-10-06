@@ -32,7 +32,7 @@ addCourseView.handlbars -> (post /courses/add )saveCourse
 
 
 var dbUrl = 'mongodb://' + credentials.mongooseDB.host + ':27017/' + credentials.mongooseDB.database;
-mongoose.Promise = global.Promise;	// this is for removing warnings.
+//mongoose.Promise = global.Promise;	// this is for removing warnings.
 //var connection = mongoose.createConnection(dbUrl);
 mongoose.connect(dbUrl);
 

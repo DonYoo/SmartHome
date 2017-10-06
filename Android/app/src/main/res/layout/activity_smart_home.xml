@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.donyoo.smarthome.SmartHome">
+    tools:context="com.example.donyoo.smarthome.SmartHome"
+    tools:ignore="ExtraText">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editText3"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginLeft="16dp"
@@ -20,15 +21,163 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button3"
         android:layout_width="88dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:onClick="sendMessage"
         android:text="@string/button_send"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editText"
-        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toRightOf="@+id/editText"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp" />
+
+
+    // login view
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/editText2"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/attempts_left"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/editText"
+        app:layout_constraintHorizontal_bias="0.571"
+        app:layout_constraintLeft_toLeftOf="@+id/editText"
+        app:layout_constraintRight_toLeftOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.578" />
+
+    <TextView
+        android:layout_width="106dp"
+        android:layout_height="29dp"
+        android:text="New Text"
+        android:id="@+id/textView3"
+        android:layout_alignTop="@+id/textView2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_toEndOf="@+id/textview"
+        android:textSize="25sp"
+        android:layout_toRightOf="@+id/textview"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
+        android:layout_marginRight="-21dp"
+        app:layout_constraintRight_toRightOf="@+id/editText"
+        tools:ignore="RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="397dp"
+        android:text="Login"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="285dp"
+        android:layout_height="43dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView"
+        android:layout_marginBottom="9dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:focusable="true"
+        android:hint="@string/enter_name"
+        android:textColorHighlight="#ff7eff15"
+        android:textColorHint="#ffff25e6"
+        app:layout_constraintBottom_toTopOf="@+id/editText2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints" />
+
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="285dp"
+        android:layout_height="43dp"
+        android:layout_alignEnd="@+id/editText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/editText"
+        android:layout_below="@+id/editText"
+        android:layout_marginBottom="89dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:ems="10"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:textColorHint="#ffff299f"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
+
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_toLeftOf="@+id/textview"
+        android:layout_toStartOf="@+id/textview"
+        android:text="@string/login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText2"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="RtlHardcoded" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="99dp"
+        android:layout_height="114dp"
+        app:srcCompat="@mipmap/ic_launcher"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.367"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        android:layout_marginRight="8dp"
+        android:contentDescription=""
+        tools:ignore="ContentDescription" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="8dp"
+        android:layout_toEndOf="@+id/textview"
+        android:layout_toRightOf="@+id/textview"
+        android:text="@string/cancel"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints,RtlHardcoded" />
 </android.support.constraint.ConstraintLayout>
