@@ -26,9 +26,18 @@ public class SmartHome extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+/*
+        boolean test = false;
+        MainActivity Don = new MainActivity();
+        if (test = true){
+            Don.onCreate(savedInstanceState);
+        }
+        else{
+
+        }
+*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_smart_home);
-
         b1 = (Button)findViewById(R.id.button);
         b2 = (Button)findViewById(R.id.button2);
 
@@ -39,13 +48,18 @@ public class SmartHome extends AppCompatActivity {
         Attempt = (TextView)findViewById(R.id.textView2);
         tx1.setVisibility(View.GONE);
         Attempt.setVisibility(View.GONE);
+        final Intent intent = new Intent(this, DisplayMessageActivity.class);
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(ed1.getText().toString().equals("admin") &&                       ed2.getText().toString().equals("admin")) {
+                    startActivity(intent);
+
+                    /* alert message
                   Toast.makeText(getApplicationContext(),
                           "Redirecting...",Toast.LENGTH_SHORT).show();
+                          */
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "Wrong Credentials", Toast.LENGTH_SHORT).show();
@@ -55,7 +69,7 @@ public class SmartHome extends AppCompatActivity {
                     counter--;
                     tx1.setText(Integer.toString(counter));
                     if (counter == 0) {
-                      b1.setEnabled(false);
+                        b1.setEnabled(false);
                     }
                 }
             }
@@ -79,8 +93,4 @@ public class SmartHome extends AppCompatActivity {
         intent.putExtra(getExtraMessage(), message);
         startActivity(intent);
     }
-
-
-
-
 }

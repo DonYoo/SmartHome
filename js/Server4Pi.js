@@ -15,7 +15,6 @@ var roomID = null;
 var Raspberrypi = [];
 var PiInfo = {};
 
-
 var server = net.createServer(
     function(socket){
 		// connect

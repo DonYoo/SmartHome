@@ -79,9 +79,9 @@ module.exports = function(passport) {
                     }
                 });
             }
+            // user already exists and is logged in, we have to link accounts
             else{
                 cleanIfAny('local', email);
-                // user already exists and is logged in, we have to link accounts
                 var user            = req.user; // pull the user out of the session
 
                 // update the current users facebook credentials
@@ -97,6 +97,9 @@ module.exports = function(passport) {
         });
     }));
 
+    // =========================================================================
+    // LOCAL Login ============================================================
+    // =========================================================================
     passport.use('local-login', new LocalStrategy({
         // by default, local strategy uses username and password, we will override with email
         usernameField : 'email',
