@@ -15,7 +15,7 @@ public interface RetrofitInterface {
     @POST("users")
     Observable<Response> register(@Body User user);
 
-    @POST("authenticate")
+    @POST("authenticate")       //authenticate
     Observable<Response> login();
 
     @GET("users/{email}")

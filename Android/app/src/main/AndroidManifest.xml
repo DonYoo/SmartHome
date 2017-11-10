@@ -2,19 +2,42 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.donyoo.smarthome">
 
+    // Permission to access internet. even though google removed the need to ask permission for
+    internet
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        android:supportsRtl="true">
+
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/AppTheme.LoginRegister">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.LoginRegister"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http"
+                    android:host="smarthome" />
+
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".DisplayMessageActivity"
             android:parentActivityName=".SmartHome">
@@ -23,7 +46,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SmartHome" />
         </activity>
-        <activity android:name=".ProfileActivity" />
+
+        <activity android:name=".ProfileActivity"
+            android:theme="@style/AppTheme.Profile"/>
     </application>
 
 </manifest>

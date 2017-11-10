@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.donyoo.smarthome.DisplayMessageActivity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.example.donyoo.smarthome.ProfileActivity;
@@ -108,12 +109,9 @@ public class LoginFragment extends Fragment {
         }
 
         if (err == 0) {
-
             loginProcess(email,password);
             mProgressBar.setVisibility(View.VISIBLE);
-
         } else {
-
             showSnackBarMessage("Enter Valid Details !");
         }
     }
@@ -144,7 +142,7 @@ public class LoginFragment extends Fragment {
         mEtEmail.setText(null);
         mEtPassword.setText(null);
 
-        Intent intent = new Intent(getActivity(), ProfileActivity.class);
+        Intent intent = new Intent(getActivity(), DisplayMessageActivity.class);
         startActivity(intent);
 
     }
