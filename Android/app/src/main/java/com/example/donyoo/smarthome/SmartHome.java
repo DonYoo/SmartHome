@@ -1,14 +1,20 @@
 package com.example.donyoo.smarthome;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.BreakIterator;
 
 public class SmartHome extends AppCompatActivity {
     private static final String EXTRA_MESSAGE = "com.example.donyoo.SmartHome.MESSAGE";
@@ -85,12 +91,81 @@ public class SmartHome extends AppCompatActivity {
 
     /**
      * called when the user taps the send button
-     */
+
     public void sendMessage(View view) {
         Intent intent = new Intent(this, DisplayMessageActivity.class);
         EditText editText = (EditText) findViewById(R.id.editText3);
         String message = editText.getText().toString();
         intent.putExtra(getExtraMessage(), message);
         startActivity(intent);
+    }
+     */
+
+    private Handler messageHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            progressDialog.dismiss();
+        }
+    };
+
+    private ProgressDialog progressDialog;
+
+
+
+
+
+
+
+
+
+
+
+
+    public void sendMessage(View view) {
+        EditText editText = (EditText) findViewById(R.id.editText3);
+        TextView displayText = (TextView) findViewById(R.id.displayText);
+        String TAG = this.getClass().getSimpleName();
+
+        int delay = 1;
+        int delaytime = Integer.parseInt(editText.getText().toString());
+
+        displayText.setText("hello for 1000000000 ops");
+
+        Handler mainHandler = new Handler(){
+            public void handleMessage(Message m) {
+                displayText.setText(
+                        m.getData().getString("Status"));
+            }
+        };
+        new Thread ( new Runnable() {
+            public void run(){
+                int calculation =1000000000;
+                for(int i=0; i<calculation; i++){
+
+                }
+                /*
+                mainHandler.postDelayed(new Runnable(){
+                    public void run(){
+                        displayText.setText("Done : i = " + calculation);
+                    }
+                }, delay * delaytime * 1000);
+                */
+
+                Message m = Message.obtain();
+                Bundle bundle = new Bundle();
+                bundle.putString("Status", "Thread: " +
+                        Thread.currentThread().getId()+
+                        " Done : i = " + calculation);
+                m.setData(bundle);
+
+                // log
+                Log.d(TAG, "Thread"+
+                Thread.currentThread().getId()+
+                " Done : i = " + calculation);
+
+                // this send the message to main handler
+                mainHandler.sendMessage(m);
+            }
+        }).start();
     }
 }

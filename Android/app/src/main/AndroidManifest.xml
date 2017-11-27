@@ -14,7 +14,7 @@
         android:supportsRtl="true">
 
         <activity
-            android:name=".SplashActivity"
+            android:name=".SmartHome"
             android:theme="@style/AppTheme.LoginRegister">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
