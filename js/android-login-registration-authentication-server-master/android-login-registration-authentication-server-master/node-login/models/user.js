@@ -16,6 +16,11 @@ const userSchema = mongoose.Schema({
 });
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/node-login');
+mongoose.connect('mongodb://localhost:27017/node-login', {
+	useMongoClient: true,		// to satisfy the warning.
+	socketTimeoutMS: 0,
+	keepAlive: true,
+	reconnectTries: 30
+  });
 
 module.exports = mongoose.model('user', userSchema);        

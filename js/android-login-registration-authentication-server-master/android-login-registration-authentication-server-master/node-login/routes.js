@@ -43,6 +43,8 @@ module.exports = router => {
 		const email = req.body.email;
 		const password = req.body.password;
 
+		
+
 		if (!name || !email || !password || !name.trim() || !email.trim() || !password.trim()) {
 
 			res.status(400).json({message: 'Invalid Request !'});
@@ -103,22 +105,43 @@ module.exports = router => {
 		}
 	});
 
+	function checkToken(req) {
+		const token = req.headers['x-access-token'];
+
+		if (token) {
+
+			try {
+					var decoded = jwt.verify(token, config.secret);
+					return decoded.message === req.params.id;
+			} catch(err) {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
+
+	/*
+	reset the password
+	*/
 	router.post('/users/:id/password', (req,res) => {
 
 		const email = req.params.id;
 		const token = req.body.token;
 		const newPassword = req.body.password;
 
+		// this bring you to screen that type email address for token
 		if (!token || !newPassword || !token.trim() || !newPassword.trim()) {
-
+			console.log("coming here?1");
 			password.resetPasswordInit(email)
-
 			.then(result => res.status(result.status).json({ message: result.message }))
-
 			.catch(err => res.status(err.status).json({ message: err.message }));
 
-		} else {
-
+		} 
+		// this bring you to screen that type token from email and new password.
+		else {
+			
 			password.resetPasswordFinish(email, token, newPassword)
 
 			.then(result => res.status(result.status).json({ message: result.message }))
@@ -126,27 +149,4 @@ module.exports = router => {
 			.catch(err => res.status(err.status).json({ message: err.message }));
 		}
 	});
-
-	function checkToken(req) {
-
-		const token = req.headers['x-access-token'];
-
-		if (token) {
-
-			try {
-
-  				var decoded = jwt.verify(token, config.secret);
-
-  				return decoded.message === req.params.id;
-
-			} catch(err) {
-
-				return false;
-			}
-
-		} else {
-
-			return false;
-		}
-	}
 }
