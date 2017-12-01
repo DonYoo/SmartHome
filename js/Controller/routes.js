@@ -12,7 +12,8 @@ addCourseView.handlbars -> (post /courses/add )saveCourse
 
 */
 
-// other modules
+// link variable to file.
+
 var GetIndex                = require("./index").GetIndex;
 
 var GetSignup               = require("./signup").GetSignup;
@@ -35,24 +36,20 @@ var GetProfile              = require("./profile").GetProfile;
 var GetUnlinkLocal          = require("./profile").GetUnlinkLocal;
 var GetUnlinkFacebook       = require("./profile").GetUnlinkFacebook;
 
+// Android only so far
+var PostResetPassword       = require("./resetPassword").PostResetPassword;
+
 /*
 GET  - Requests data from a specified resource
 POST - Submits data to be processed to a specified resource
 */
 
-    // =====================================
-    // HOME PAGE (with login links) ========
-    // =====================================
     // router specs
 router.get('/', function(req, res, next) {
     res.redirect('/index');
 });
 router.get('/index',                    GetIndex);
 
-    // =====================================
-    // SIGNUP ==============================
-    // =====================================
-// show the signup form
 router.get('/signup',                   GetSignup);
 router.post('/signup',                  PostSignup);
     // =============================================================================
@@ -62,16 +59,10 @@ router.post('/signup',                  PostSignup);
 router.get('/connect/local',            GetlocalLink);
 router.post('/connect/local',           PostlocalLink);
 
-    // =====================================
-    // LOGIN ===============================
-    // =====================================
     // show the login form
 router.get('/login',                    GetLogin);           
 router.post('/login',                   PostLogin);
 
-    // =====================================
-    // FACEBOOK ROUTES =====================
-    // =====================================
     // route for facebook authentication and login
 router.get('/auth/facebook',            AuthFacebook);
 router.get('/auth/facebook/callback',   CallbackFacebook); // handle the callback after facebook has authenticated the user
@@ -88,9 +79,6 @@ router.get('/connect/facebook/callback',CallbackFacebookLink); // handle the cal
 router.get('/home', isLoggedIn,         GetHome);
 router.post('/home',                    PostHome);
 
-    // =====================================
-    // PROFILE SECTION =====================
-    // =====================================
     // we will want this protected so you have to be logged in to visit
     // we will use route middleware to verify this (the isLoggedIn function)
 router.get('/profile', isLoggedIn,      GetProfile);
@@ -116,6 +104,17 @@ router.get('/logout', function(req, res) {
         res.redirect('/');
     });
 
+
+    
+    // =====================================
+    // Password Change =====================
+    // =====================================
+// trigger function when android call post
+router.post('/users/:id/password',		PostResetPassword);
+
+
+
+
 module.exports = router;
 
 // route middleware to make sure a user is logged in
@@ -126,3 +125,4 @@ function isLoggedIn(req, res, next) {
     // if they aren't redirect them to the home page
     res.redirect('/');
 }
+

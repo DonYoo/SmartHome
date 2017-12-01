@@ -34,7 +34,13 @@ addCourseView.handlbars -> (post /courses/add )saveCourse
 var dbUrl = 'mongodb://' + credentials.mongooseDB.host + ':27017/' + credentials.mongooseDB.database;
 //mongoose.Promise = global.Promise;	// this is for removing warnings.
 //var connection = mongoose.createConnection(dbUrl);
-mongoose.connect(dbUrl);
+mongoose.connect(dbUrl, {
+	useMongoClient: true,		// to satisfy the warning.
+	socketTimeoutMS: 0,
+	keepAlive: true,
+	reconnectTries: 30
+  });
+
 
 // setup handlebars view engine
 app.engine('handlebars', 
@@ -58,7 +64,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Routing ======================================================================
-var routes = require('./Web/routes');// load our routes and pass in our app and fully configured passport
+var routes = require('./Controller/routes');// load our routes and pass in our app and fully configured passport
 app.use('/', routes);
 
 app.use(function(req, res) {
