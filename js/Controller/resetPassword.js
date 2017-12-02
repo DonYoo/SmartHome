@@ -1,4 +1,4 @@
-var passport = require('passport');
+const password = require('../Function/password');
 
 module.exports.PostResetPassword = 
     function (req , res){
@@ -16,7 +16,7 @@ module.exports.PostResetPassword =
         } 
         // this bring you to screen that type token from email and new password.
         else {
-            
+            console.log("this is when you put a token and change the password");
             password.resetPasswordFinish(email, token, newPassword)
     
             .then(result => res.status(result.status).json({ message: result.message }))

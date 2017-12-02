@@ -12,6 +12,10 @@ import rx.Observable;
 
 public interface RetrofitInterface {
 
+    /*
+    Path is for the web address and Body for what is passing to server. 
+    * */
+
     @POST("users")
     Observable<Response> register(@Body User user);
 

@@ -34,6 +34,7 @@ addCourseView.handlbars -> (post /courses/add )saveCourse
 var dbUrl = 'mongodb://' + credentials.mongooseDB.host + ':27017/' + credentials.mongooseDB.database;
 //mongoose.Promise = global.Promise;	// this is for removing warnings.
 //var connection = mongoose.createConnection(dbUrl);
+mongoose.Promise = global.Promise;
 mongoose.connect(dbUrl, {
 	useMongoClient: true,		// to satisfy the warning.
 	socketTimeoutMS: 0,
@@ -50,7 +51,13 @@ app.set('view engine', 'handlebars');
 
 // required for passport
 require('./config/passport')(passport); // pass passport for configuration
-app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
+
+app.use(session({
+  resave: true,
+  saveUninitialized: true,
+  secret: 'ilovescotchscotchyscotchscotch'
+}));
+
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
