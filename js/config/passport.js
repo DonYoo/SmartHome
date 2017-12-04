@@ -44,7 +44,7 @@ module.exports = function(passport) {
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
     function(req, email, password, done) {
-
+        
         // asynchronous
         // User.findOne wont fire unless data is sent back
         process.nextTick(function() {
@@ -65,6 +65,10 @@ module.exports = function(passport) {
                         // if there is no user with that email
                         // create the user
                         var newUser            = new User();
+                        // user name ( new 12/2/2017)
+                        if(req.body.name != undefined){
+                            newUser.local.name = req.body.name;
+                        }
                         // set the user's local credentials
                         newUser.local.email    = email;
                         // generate hashcode for a password.

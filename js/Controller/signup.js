@@ -2,9 +2,11 @@ var passport = require('passport');
 
 module.exports.GetSignup = 
 	function (req , res , next){
+        console.log(req.flash('signupMessage'));
+
+        res.status(200).json({ message: 'That email is already taken.' });
     // views/GetSignup.handlebars
-    res.render('signup',
-      {title:"Welcome to SmartHome Service", message: req.flash('loginMessage') }); 
+        //res.render('signup', {title:"Welcome to SmartHome Service", message: req.flash('signupMessage') }); 
   };
 
 module.exports.PostSignup = 
@@ -20,7 +22,7 @@ module.exports.PostSignup =
     // locally --------------------------------
 module.exports.GetlocalLink = 
     function (req , res , next){
-        res.render('connect-local', { message: req.flash('loginMessage') });
+        res.render('connect-local', { message: req.flash('signupMessage') });
     };
 module.exports.PostlocalLink = 
     passport.authenticate('local-signup', {

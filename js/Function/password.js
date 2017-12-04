@@ -25,7 +25,7 @@ exports.resetPasswordInit = email =>
 			if (users.length == 0) {
 
 				reject({ status: 404, message: 'User Not Found !' });
-				// throw would make not go to next .then
+				// throw would make go to catch
 				throw ('User Not Found !');
 
 			} else {
@@ -35,13 +35,8 @@ exports.resetPasswordInit = email =>
 				const hash = bcrypt.hashSync(random, salt);
 
 				user.local.temp_password = hash;
+				// save the current time at the DB for limit 2 min for user change password time
 				user.local.temp_password_time = new Date();
-				
-
-				console.log("reset start time " + user.local.temp_password_time);
-
-				console.log(user);
-
 				return user.save();
 			}
 		})
@@ -90,11 +85,9 @@ exports.resetPasswordFinish = (email, token, password) =>
 		user.find({ 'local.email': email })
 
 		.then(users => {
-
 			let user = users[0];
 
-			console.log(user.local.email);
-
+			// Calculate time and check if its less than 2 min.
 			const diff = new Date() - new Date(user.local.temp_password_time); 
 			const seconds = Math.floor(diff / 1000);
 			console.log(`Seconds : ${seconds}`);
@@ -116,7 +109,10 @@ exports.resetPasswordFinish = (email, token, password) =>
 
 				const salt = bcrypt.genSaltSync(10);
 				const hash = bcrypt.hashSync(password, salt);
+				// reset the password
 				user.local.password = hash;
+
+				// buffer clear
 				user.local.temp_password = undefined;
 				user.local.temp_password_time = undefined;
 
