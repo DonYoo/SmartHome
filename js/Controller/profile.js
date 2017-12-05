@@ -8,6 +8,12 @@ module.exports.GetProfile =
     });
 };
 
+module.exports.AndroidGetProfile = 
+	function (req , res , next){
+        res.json(req.user);  // get the user out of session and pass to template
+};
+
+
 module.exports.GetUnlinkLocal = 
     function(req, res) {
         var user            = req.user;

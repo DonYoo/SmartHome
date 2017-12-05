@@ -16,21 +16,21 @@ public interface RetrofitInterface {
     Path is for the web address and Body for what is passing to server.
     * */
 
-    @POST("signup")
+    @POST("android/signup")
     Observable<Response> register(@Body User user);
 
-    @POST("authenticate")       //authenticate
-    Observable<Response> login();
+    @POST("android/login")       //authenticate
+    Observable<Response> login(@Body User user);
 
-    @GET("users/{email}")
+    @GET("android/profile/{email}")
     Observable<User> getProfile(@Path("email") String email);
 
     @PUT("users/{email}")
     Observable<Response> changePassword(@Path("email") String email, @Body User user);
 
-    @POST("users/{email}/password")
+    @POST("android/{email}/password")
     Observable<Response> resetPasswordInit(@Path("email") String email);
 
-    @POST("users/{email}/password")
+    @POST("android/{email}/password")
     Observable<Response> resetPasswordFinish(@Path("email") String email, @Body User user);
 }

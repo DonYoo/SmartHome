@@ -25,8 +25,8 @@
     "passport-local": "^1.0.0",
     "underscore": "^1.8.3",
     "uuid": "^3.0.1",
-    "nodemailer": "^2.6.0",
-    "randomstring": "^1.1.5"
+    "randomstring": "^1.1.5",
+    "nodemailer": "^4.4.0"
   },
   "repository": {
     "type": "git",

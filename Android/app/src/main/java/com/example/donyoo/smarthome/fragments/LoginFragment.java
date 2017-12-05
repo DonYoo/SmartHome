@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.donyoo.smarthome.DisplayMessageActivity;
+import com.example.donyoo.smarthome.model.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.example.donyoo.smarthome.ProfileActivity;
@@ -94,6 +95,11 @@ public class LoginFragment extends Fragment {
         String email = mEtEmail.getText().toString();
         String password = mEtPassword.getText().toString();
 
+        // 12/5/17 add user json.
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(password);
+
         int err = 0;
 
         if (!validateEmail(email)) {
@@ -109,7 +115,7 @@ public class LoginFragment extends Fragment {
         }
 
         if (err == 0) {
-            loginProcess(email,password);
+            loginProcess(user);
             mProgressBar.setVisibility(View.VISIBLE);
         } else {
             showSnackBarMessage("Enter Valid Details !");
@@ -122,9 +128,9 @@ public class LoginFragment extends Fragment {
         mTiPassword.setError(null);
     }
 
-    private void loginProcess(String email, String password) {
+    private void loginProcess(User user) {
 
-        mSubscriptions.add(NetworkUtil.getRetrofit(email, password).login()
+        mSubscriptions.add(NetworkUtil.getRetrofit().login(user)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponse,this::handleError));

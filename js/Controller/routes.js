@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-
 /* Path
 Add new course from main screen.
 
@@ -9,11 +8,9 @@ Webapplication.js -> index.js -> displayCourses.js - > displayCoursesView.handle
 -> javascripts(clickActions.js) -> addCourse.js ->
 addCourseView.handlbars -> (post /courses/add )saveCourse 
 -> index.js
-
 */
 
 // link variable to file.
-
 var GetIndex                = require("./index").GetIndex;
 
 var GetSignup               = require("./signup").GetSignup;
@@ -36,8 +33,11 @@ var GetProfile              = require("./profile").GetProfile;
 var GetUnlinkLocal          = require("./profile").GetUnlinkLocal;
 var GetUnlinkFacebook       = require("./profile").GetUnlinkFacebook;
 
-// Android only so far
-var PostResetPassword       = require("./resetPassword").PostResetPassword;
+// Android route
+var AnroidResetPassword     = require("./resetPassword").PostResetPassword;
+var AndroidPostSignup       = require("./signup").AndroidPostSignup;
+var AndroidPostLogin        = require("./login").AndroidPostLogin;
+var AndroidGetProfile       = require("./profile").AndroidGetProfile;
 
 /*
 GET  - Requests data from a specified resource
@@ -107,10 +107,33 @@ router.get('/logout', function(req, res) {
 
     
     // =====================================
-    // Password Change =====================
+    // Android =============================
     // =====================================
-// trigger function when android call post
-router.post('/users/:id/password',		PostResetPassword);
+
+    // Android password reset. email the password and get a token.
+router.post('/android/:email/password',	AnroidResetPassword);
+
+// Android Signup function
+router.get('/android/signup', function(req , res , next) {
+    // still broken. but i don't undestand how to get the req.flash into here from android.
+    //console.log(req.badRequestMessage);
+    res.status(400).json({message: 'That email is already taken.' });
+});
+router.post('/android/signup',          AndroidPostSignup);
+
+// Android Login function
+router.get('/android/login', function(req , res , next) {
+    // still broken. but i don't undestand how to get the req.flash into here from android.
+    //console.log(req.flash('loginMessage'));
+    res.status(400).json({message: 'No user found or Wrong password..' });
+});
+router.post('/android/login',           AndroidPostLogin);
+
+
+// Android profile home
+router.get('/android/profile/',         AndroidGetProfile);
+
+
 
 
 
@@ -125,4 +148,3 @@ function isLoggedIn(req, res, next) {
     // if they aren't redirect them to the home page
     res.redirect('/');
 }
-

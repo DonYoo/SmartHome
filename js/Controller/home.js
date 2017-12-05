@@ -1,4 +1,5 @@
-var Raspberrypi = require('../Server4Pi.js');
+var Raspberrypi = require('../Server4Pi');
+var LEDemitter = require('../SmartEventEmitter').LEDemitter;
 
 module.exports.GetHome = 
 	function (req , res , next){
@@ -10,9 +11,6 @@ module.exports.GetHome =
       {title:"Welcome to SmartHome Service", data:results});
 };
 
-
-
-var LEDemitter = require('../SmartEventEmitter').LEDemitter;
 
 LEDemitter.on('LED', function (args) {
     // trigger next step only if the PiControl args already handled.
@@ -29,7 +27,9 @@ function SendMsgtoRaspberrypi(req , res , next){
     console.log('From User Server:' + req);
 
     LEDemitter.LED();
-    res.redirect('/home');
+    res.redirect('android/home/:email');
+    
+    //res.redirect('/home');
 };
 
 

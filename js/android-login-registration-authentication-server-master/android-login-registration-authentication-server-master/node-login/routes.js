@@ -13,6 +13,7 @@ module.exports = router => {
 
 	router.get('/', (req, res) => res.end('Welcome to Learn2Crack !'));
 
+	// login
 	router.post('/authenticate', (req, res) => {
 
 		const credentials = auth(req);
@@ -37,6 +38,7 @@ module.exports = router => {
 		}
 	});
 
+	// register
 	router.post('/users', (req, res) => {
 
 		const name = req.body.name;
@@ -63,6 +65,7 @@ module.exports = router => {
 		}
 	});
 
+	// get profile
 	router.get('/users/:id', (req,res) => {
 
 		if (checkToken(req)) {
@@ -79,6 +82,7 @@ module.exports = router => {
 		}
 	});
 
+	// change password
 	router.put('/users/:id', (req,res) => {
 
 		if (checkToken(req)) {

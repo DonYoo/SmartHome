@@ -3,7 +3,7 @@ const password = require('../Function/password');
 module.exports.PostResetPassword = 
     function (req , res){
        
-        const email = req.params.id;
+        const email = req.params.email;
         const token = req.body.token;
         const newPassword = req.body.password;
     

@@ -13,3 +13,10 @@ module.exports.PostLogin =
         failureRedirect : '/login', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     });
+
+module.exports.AndroidPostLogin =
+    passport.authenticate('local-login', {
+        successRedirect : '/android/profile', // redirect to the secure profile section
+        failureRedirect : '/android/login', // redirect back to the signup page if there is an error
+        failureFlash : true // allow flash messages
+    });
