@@ -69,7 +69,7 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
     private void initSharedPreferences() {
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mToken = mSharedPreferences.getString(Constants.TOKEN,"");
+        //mToken = mSharedPreferences.getString(Constants.TOKEN,"");
         mEmail = mSharedPreferences.getString(Constants.EMAIL,"");
     }
 
@@ -77,7 +77,7 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
 
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString(Constants.EMAIL,"");
-        editor.putString(Constants.TOKEN,"");
+        //editor.putString(Constants.TOKEN,"");
         editor.apply();
         finish();
     }
@@ -88,7 +88,7 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
 
         Bundle bundle = new Bundle();
         bundle.putString(Constants.EMAIL, mEmail);
-        bundle.putString(Constants.TOKEN,mToken);
+        //bundle.putString(Constants.TOKEN,mToken);
         fragment.setArguments(bundle);
 
         fragment.show(getFragmentManager(), ChangePasswordDialog.TAG);
@@ -96,7 +96,7 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
 
     private void loadProfile() {
 
-        mSubscriptions.add(NetworkUtil.getRetrofit(mToken).getProfile(mEmail)
+        mSubscriptions.add(NetworkUtil.getRetrofit().getProfile(mEmail)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponse,this::handleError));

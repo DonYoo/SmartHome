@@ -9,8 +9,10 @@ module.exports.GetProfile =
 };
 
 module.exports.AndroidGetProfile = 
+
 	function (req , res , next){
-        res.json(req.user);  // get the user out of session and pass to template
+        console.log(req.user);
+        res.status(200).json({message: 'holymoly' });   // get the user out of session and pass to template
 };
 
 

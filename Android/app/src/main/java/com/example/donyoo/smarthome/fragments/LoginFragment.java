@@ -136,6 +136,7 @@ public class LoginFragment extends Fragment {
                 .subscribe(this::handleResponse,this::handleError));
     }
 
+    // this is handler after loginProcess get the response from the server.
     private void handleResponse(Response response) {
 
         mProgressBar.setVisibility(View.GONE);
@@ -148,11 +149,13 @@ public class LoginFragment extends Fragment {
         mEtEmail.setText(null);
         mEtPassword.setText(null);
 
-        Intent intent = new Intent(getActivity(), DisplayMessageActivity.class);
+        // bring it to profile page in android
+        Intent intent = new Intent(getActivity(), ProfileActivity.class);
         startActivity(intent);
 
     }
 
+    // if any error occurs between
     private void handleError(Throwable error) {
 
         mProgressBar.setVisibility(View.GONE);
@@ -184,6 +187,7 @@ public class LoginFragment extends Fragment {
         }
     }
 
+    // if register button is clicked
     private void goToRegister(){
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();

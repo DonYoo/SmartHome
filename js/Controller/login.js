@@ -14,9 +14,24 @@ module.exports.PostLogin =
         failureFlash : true // allow flash messages
     });
 
+/**
+ * TO-DO
+ * this is where i was working on.
+ */
+
+module.exports.AndroidPostLogin = 
+    passport.authenticate('local-login'),
+    function(req, res){
+        console.log(req.user);
+        res.json(req.user);
+    }
+
+        /*
 module.exports.AndroidPostLogin =
     passport.authenticate('local-login', {
-        successRedirect : '/android/profile', // redirect to the secure profile section
-        failureRedirect : '/android/login', // redirect back to the signup page if there is an error
-        failureFlash : true // allow flash messages
+        successRedirect : '/android/SuccessLogin', // redirect to the secure profile section
+        failureRedirect : '/android/FailedLogin', // redirect back to the signup page if there is an error
+        failureFlash : true, // allow flash messages
+
     });
+    */

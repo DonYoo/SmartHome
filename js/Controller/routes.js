@@ -33,11 +33,6 @@ var GetProfile              = require("./profile").GetProfile;
 var GetUnlinkLocal          = require("./profile").GetUnlinkLocal;
 var GetUnlinkFacebook       = require("./profile").GetUnlinkFacebook;
 
-// Android route
-var AnroidResetPassword     = require("./resetPassword").PostResetPassword;
-var AndroidPostSignup       = require("./signup").AndroidPostSignup;
-var AndroidPostLogin        = require("./login").AndroidPostLogin;
-var AndroidGetProfile       = require("./profile").AndroidGetProfile;
 
 /*
 GET  - Requests data from a specified resource
@@ -110,33 +105,38 @@ router.get('/logout', function(req, res) {
     // Android =============================
     // =====================================
 
+    
+// Android route
+var AnroidResetPassword     = require("./resetPassword").PostResetPassword;
+var AndroidPostSignup       = require("./signup").AndroidPostSignup;
+var AndroidPostLogin        = require("./login").AndroidPostLogin;
+var AndroidGetProfile       = require("./profile").AndroidGetProfile;
+
     // Android password reset. email the password and get a token.
 router.post('/android/:email/password',	AnroidResetPassword);
 
 // Android Signup function
+router.post('/android/signup',          AndroidPostSignup);
 router.get('/android/signup', function(req , res , next) {
     // still broken. but i don't undestand how to get the req.flash into here from android.
     //console.log(req.badRequestMessage);
     res.status(400).json({message: 'That email is already taken.' });
 });
-router.post('/android/signup',          AndroidPostSignup);
 
 // Android Login function
-router.get('/android/login', function(req , res , next) {
+router.post('/android/login',           AndroidPostLogin);
+router.get('/android/SuccessLogin',     function(req , res , next) {
+    res.status(200).json({message: 'holymoly' });   // get the user out of session and pass to template
+});
+
+router.get('/android/FailedLogin', function(req , res , next) {
     // still broken. but i don't undestand how to get the req.flash into here from android.
     //console.log(req.flash('loginMessage'));
     res.status(400).json({message: 'No user found or Wrong password..' });
 });
-router.post('/android/login',           AndroidPostLogin);
-
 
 // Android profile home
 router.get('/android/profile/',         AndroidGetProfile);
-
-
-
-
-
 
 module.exports = router;
 
