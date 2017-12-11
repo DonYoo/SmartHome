@@ -67,7 +67,6 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
     }
 
     private void initSharedPreferences() {
-
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         //mToken = mSharedPreferences.getString(Constants.TOKEN,"");
         mEmail = mSharedPreferences.getString(Constants.EMAIL,"");

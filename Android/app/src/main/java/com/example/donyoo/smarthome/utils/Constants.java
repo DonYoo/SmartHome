@@ -1,4 +1,5 @@
 package com.example.donyoo.smarthome.utils;
+import  com.example.donyoo.smarthome.model.User;
 
 public class Constants {
 

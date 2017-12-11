@@ -11,6 +11,7 @@ var userSchema = mongoose.Schema({
         name 			    : String,
         email               : {type: String, unique: true}, 
         password            : String,
+        created_at		    : String,
         temp_password       : String,
         temp_password_time  : String
     },

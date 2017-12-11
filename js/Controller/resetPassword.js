@@ -4,6 +4,7 @@ module.exports.PostResetPassword =
     function (req , res){
        
         const email = req.params.email;
+        // need to clean up token. i don't think i need it since i use passport.
         const token = req.body.token;
         const newPassword = req.body.password;
     

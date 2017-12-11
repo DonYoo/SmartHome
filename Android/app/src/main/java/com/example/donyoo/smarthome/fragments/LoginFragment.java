@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.donyoo.smarthome.DisplayMessageActivity;
-import com.example.donyoo.smarthome.model.User;
+import com.example.donyoo.smarthome.model.Login;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.example.donyoo.smarthome.ProfileActivity;
@@ -96,9 +97,7 @@ public class LoginFragment extends Fragment {
         String password = mEtPassword.getText().toString();
 
         // 12/5/17 add user json.
-        User user = new User();
-        user.setEmail(email);
-        user.setPassword(password);
+        Login login = new Login(email, password);
 
         int err = 0;
 
@@ -115,7 +114,7 @@ public class LoginFragment extends Fragment {
         }
 
         if (err == 0) {
-            loginProcess(user);
+            loginProcess(login);
             mProgressBar.setVisibility(View.VISIBLE);
         } else {
             showSnackBarMessage("Enter Valid Details !");
@@ -128,9 +127,9 @@ public class LoginFragment extends Fragment {
         mTiPassword.setError(null);
     }
 
-    private void loginProcess(User user) {
+    private void loginProcess(Login login) {
 
-        mSubscriptions.add(NetworkUtil.getRetrofit().login(user)
+        mSubscriptions.add(NetworkUtil.getRetrofit().login(login)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponse,this::handleError));
@@ -142,6 +141,7 @@ public class LoginFragment extends Fragment {
         mProgressBar.setVisibility(View.GONE);
 
         SharedPreferences.Editor editor = mSharedPreferences.edit();
+        Log.d("token", response.getToken());
         editor.putString(Constants.TOKEN,response.getToken());
         editor.putString(Constants.EMAIL,response.getMessage());
         editor.apply();

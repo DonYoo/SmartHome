@@ -1,4 +1,5 @@
 var passport = require('passport');
+var User     = require('../config/models/user');
 
 module.exports.GetProfile = 
 	function (req , res , next){
@@ -8,12 +9,19 @@ module.exports.GetProfile =
     });
 };
 
-module.exports.AndroidGetProfile = 
+module.exports.AndroidGetProfile = function (req , res){
+    
+    const email = req.params.email;
+    new Promise((resolve,reject) => {
 
-	function (req , res , next){
-        console.log(req.user);
-        res.status(200).json({message: 'holymoly' });   // get the user out of session and pass to template
-};
+        User.find({ 'local.email': email }, { name: 1, email: 1, created_at: 1, _id: 0 })
+
+        .then(users => resolve(users[0]))
+
+        .catch(err => reject({ status: 500, message: 'Internal Server Error !' }))
+
+    });
+}
 
 
 module.exports.GetUnlinkLocal = 

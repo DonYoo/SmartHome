@@ -69,6 +69,9 @@ module.exports = function(passport) {
                         if(req.body.name != undefined){
                             newUser.local.name = req.body.name;
                         }
+                        // created account time
+                        newUser.local.created_at =  new Date();
+
                         // set the user's local credentials
                         newUser.local.email    = email;
                         // generate hashcode for a password.

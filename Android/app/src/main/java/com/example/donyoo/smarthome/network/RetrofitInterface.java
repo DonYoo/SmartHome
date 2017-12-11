@@ -2,9 +2,11 @@ package com.example.donyoo.smarthome.network;
 
 import com.example.donyoo.smarthome.model.Response;
 import com.example.donyoo.smarthome.model.User;
+import com.example.donyoo.smarthome.model.Login;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -20,10 +22,10 @@ public interface RetrofitInterface {
     Observable<Response> register(@Body User user);
 
     @POST("android/login")       //authenticate
-    Observable<Response> login(@Body User user);
+    Observable<Response> login(@Body Login login);
 
     @GET("android/profile/{email}")
-    Observable<User> getProfile(@Path("email") String email);
+    Observable<User>  getProfile(@Path("email") String email);
 
     @PUT("users/{email}")
     Observable<Response> changePassword(@Path("email") String email, @Body User user);
