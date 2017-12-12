@@ -18,10 +18,9 @@ exports.resetPasswordInit = email =>
 
 		const random = randomstring.generate(8);
 
-		user.find({ 'local.email': email })
+		user.findOne({ 'local.email': email })
 
 		.then(users => {
-
 			if (users.length == 0) {
 
 				reject({ status: 404, message: 'User Not Found !' });
@@ -82,7 +81,7 @@ exports.resetPasswordFinish = (email, token, password) =>
 
 	new Promise((resolve, reject) => {
 
-		user.find({ 'local.email': email })
+		user.findOne({ 'local.email': email })
 
 		.then(users => {
 			let user = users[0];
@@ -137,31 +136,34 @@ exports.changePassword = (email, password, newPassword) =>
 
 	new Promise((resolve, reject) => {
 
-		user.find({ 'local.email': email })
+		user.findOne({ 'local.email': email })
 
 		.then(users => {
-
-			let user = users[0];
+			let user = users;
 			const hashed_password = user.local.password;
 
 			if (bcrypt.compareSync(password, hashed_password)) {
 
 				const salt = bcrypt.genSaltSync(10);
 				const hash = bcrypt.hashSync(newPassword, salt);
-
 				user.local.password = hash;
-
-				return user.save();
+				return user.save();		// have to save the whole user schema.
 
 			} else {
-
 				reject({ status: 401, message: 'Invalid Old Password !' });
 			}
 		})
 
-		.then(user => resolve({ status: 200, message: 'Password Updated Sucessfully !' }))
+		.then(user => {
+			//console.log('here1');
+			resolve({ status: 200, message: 'Password Updated Sucessfully !' })
+		})
 
-		.catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
+		.catch(err => {
+			//console.log('here2');
+			reject({ status: 500, message: 'Internal Server Error !!' })
+		}
+		);
 
 	}
 );

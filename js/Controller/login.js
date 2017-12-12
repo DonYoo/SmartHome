@@ -1,6 +1,6 @@
 var passport = require('passport');
-const jwt = require('jsonwebtoken');
-const config = require('../config/email.json');
+var jwt = require('jsonwebtoken');
+const config = require('../config/email.json'); //secret for android token.
 
 module.exports.GetLogin = 
 	function (req , res , next){
@@ -28,9 +28,11 @@ module.exports.AndroidPostLogin = function(req, res, next) {
             return next(err);
         }
         if(!user){
-            console.log("credention wrong");
-            return res.status(400).json({message: req.flash('loginMessage') });
+            var errormessage = req.flash('loginMessage')[0];
+            console.log(errormessage);
+            return res.status(400).json({ message: errormessage });
         }
+        
         req.logIn(user, function(err) {
             if (err){
                 console.log("error");
@@ -38,8 +40,6 @@ module.exports.AndroidPostLogin = function(req, res, next) {
             }
             if (!err){
                 console.log("success login");
-                console.log(req.headers);
-                console.log(req.user);
                 const token = jwt.sign(user.toObject(), config.secret, { expiresIn: 1440 });
                 return res.json({message: user.local.email, token: token});
             }

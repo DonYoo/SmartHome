@@ -1,5 +1,5 @@
 var passport = require('passport');
-var User     = require('../config/models/user');
+var user     = require('../config/models/user');
 
 module.exports.GetProfile = 
 	function (req , res , next){
@@ -12,15 +12,20 @@ module.exports.GetProfile =
 module.exports.AndroidGetProfile = function (req , res){
     
     const email = req.params.email;
+                        
     new Promise((resolve,reject) => {
-
-        User.find({ 'local.email': email }, { name: 1, email: 1, created_at: 1, _id: 0 })
-
-        .then(users => resolve(users[0]))
-
-        .catch(err => reject({ status: 500, message: 'Internal Server Error !' }))
-
-    });
+                user.findOne({ 'local.email': email }) //, { name: 1, email: 1, created_at: 1, _id: 0 })
+        
+                .then(users => {
+                    let user = users.local;
+                    user = user.toObject();
+                    delete user.password;   //delete password, unnecessary
+                    resolve(user)
+                })
+                .catch(err => reject({ status: 500, message: 'Internal Server Error !' }))
+            })
+    .then(result => res.json(result))
+    .catch(err => res.status(err.status).json({ message: err.message }));
 }
 
 

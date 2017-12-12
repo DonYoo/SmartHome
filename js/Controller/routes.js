@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var jwt = require('jsonwebtoken');
+const config = require('../config/email.json'); //secret for android token.
 
 /* Path
 Add new course from main screen.
@@ -91,10 +93,6 @@ router.get('/unlink/local',                     GetUnlinkLocal);
     // facebook -------------------------------
 router.get('/unlink/facebook',                  GetUnlinkFacebook);
 
-
-    
-
-
     
     // =====================================
     // Android =============================
@@ -102,6 +100,8 @@ router.get('/unlink/facebook',                  GetUnlinkFacebook);
 
     // Android route
 var AnroidResetPassword     = require("./resetPassword").PostResetPassword;
+var AnroidChangePassword    = require("./resetPassword").AnroidChangePassword;
+
 var AndroidPostSignup       = require("./signup").AndroidPostSignup;
 var AndroidPostLogin        = require("./login").AndroidPostLogin;
 var AndroidGetProfile       = require("./profile").AndroidGetProfile;
@@ -117,6 +117,8 @@ router.post('/android/login',                   AndroidPostLogin);
 
     // Android profile home
 router.get('/android/profile/:email', checkToken,     AndroidGetProfile);
+
+router.put('/android/:email', checkToken,       AnroidChangePassword);
 
 
 
@@ -141,17 +143,19 @@ function isLoggedIn(req, res, next) {
     res.redirect('/');
 }
 
-function checkToken(req) {
+function checkToken(req, res, next) {
     const token = req.headers['x-access-token'];
 
     if (token) {
         try {
                 var decoded = jwt.verify(token, config.secret);
-                return decoded.message === req.params.id;
+                if(decoded.local.email === req.params.email){
+                    return next();
+                }
         } catch(err) {
-            return false;
+            res.end('Not logged in');
         }
     } else {
-        return false;
+        res.end('Not logged in');
     }
 }

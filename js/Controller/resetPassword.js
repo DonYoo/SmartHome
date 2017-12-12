@@ -25,3 +25,21 @@ module.exports.PostResetPassword =
             .catch(err => res.status(err.status).json({ message: err.message }));
         }
     };
+
+
+    module.exports.AnroidChangePassword = 
+    function (req , res){
+        const email = req.params.email;
+
+        const oldPassword = req.body.password;
+        const newPassword = req.body.newPassword;
+
+        if (!oldPassword || !newPassword || !oldPassword.trim() || !newPassword.trim()) {
+            res.status(400).json({ message: 'Invalid Request !' });
+
+        } else {
+            password.changePassword(email, oldPassword, newPassword)
+            .then(result => res.status(result.status).json({ message: result.message }))
+            .catch(err => res.status(err.status).json({ message: err.message }));
+        }
+    };

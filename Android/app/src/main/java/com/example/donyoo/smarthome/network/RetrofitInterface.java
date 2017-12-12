@@ -27,7 +27,7 @@ public interface RetrofitInterface {
     @GET("android/profile/{email}")
     Observable<User>  getProfile(@Path("email") String email);
 
-    @PUT("users/{email}")
+    @PUT("android/{email}")
     Observable<Response> changePassword(@Path("email") String email, @Body User user);
 
     @POST("android/{email}/password")
