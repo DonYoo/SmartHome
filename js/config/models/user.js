@@ -43,7 +43,7 @@ var dbUrl = 'mongodb://' + credentials.mongooseDB.host + ':27017/' + credentials
 //mongoose.Promise = global.Promise;	// this is for removing warnings.
 //var connection = mongoose.createConnection(dbUrl);
 mongoose.Promise = global.Promise;
-mongoose.connect(dbUrl, {
+mongoose.connect(dbUrl.toString(), {
 	useMongoClient: true,		// to satisfy the warning.
 	socketTimeoutMS: 0,
 	keepAlive: true,
