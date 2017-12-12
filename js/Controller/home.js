@@ -27,11 +27,25 @@ function SendMsgtoRaspberrypi(req , res , next){
     console.log('From User Server:' + req);
 
     LEDemitter.LED();
-    res.redirect('android/home/:email');
-    
-    //res.redirect('/home');
+    //res.redirect('android/home/:email');
+    res.redirect('/home');
 };
 
+
+// android
+module.exports.AndroidPostHome = 
+function SendMsgtoRaspberrypi(req , res , next){
+    //req.body.name
+    console.log('From User Server:' + req);
+
+    LEDemitter.LED();
+
+    var status = 'On';
+
+    status = 'Off'
+
+    res.json({message: status});
+};
 
 
 

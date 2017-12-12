@@ -35,4 +35,9 @@ public interface RetrofitInterface {
 
     @POST("android/{email}/password")
     Observable<Response> resetPasswordFinish(@Path("email") String email, @Body User user);
+
+    // 12/12/17 control raspberrypi
+    @POST("android/control/{email}")
+    Observable<Response> RaspControl(@Path("email") String email);
+
 }

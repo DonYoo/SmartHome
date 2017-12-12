@@ -1,6 +1,9 @@
 package com.example.donyoo.smarthome;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
@@ -34,6 +37,7 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
     private TextView mTvDate;
     private Button mBtChangePassword;
     private Button mBtLogout;
+    private Button mBtLED;
 
     private ProgressBar mProgressbar;
 
@@ -61,16 +65,65 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
         mBtChangePassword = (Button) findViewById(R.id.btn_change_password);
         mBtLogout = (Button) findViewById(R.id.btn_logout);
         mProgressbar = (ProgressBar) findViewById(R.id.progress);
+        mBtLED = (Button) findViewById(R.id.btn_LED);
 
         mBtChangePassword.setOnClickListener(view -> showDialog());
         mBtLogout.setOnClickListener(view -> logout());
+
+        //12/12/17
+        mBtLED.setOnClickListener(view -> trigger());
     }
+
 
     private void initSharedPreferences() {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mToken = mSharedPreferences.getString(Constants.TOKEN,"");
         mEmail = mSharedPreferences.getString(Constants.EMAIL,"");
     }
+
+    private void trigger() {
+        LEDtrigger();
+    }
+
+    //12/12 control
+    private void LEDtrigger() {
+
+        mSubscriptions.add(NetworkUtil.getRetrofit(mToken).RaspControl(mEmail)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::LEDhandleResponse,this::LEDhandleError));
+    }
+
+    private void LEDhandleResponse(Response response) {
+        String result = response.getMessage();
+        ColorDrawable buttonColor = (ColorDrawable) mBtLED.getBackground();
+        int colorId = buttonColor.getColor();
+
+        if(colorId == 0xff0099cc){
+            mBtLED.setBackgroundColor(Color.GREEN);
+        }
+        else{   //Off
+            mBtLED.setBackgroundColor(0xff0099cc);
+        }
+    }
+
+    private void LEDhandleError(Throwable error) {
+        mProgressbar.setVisibility(View.GONE);
+        if (error instanceof HttpException) {
+            Gson gson = new GsonBuilder().create();
+            try {
+                String errorBody = ((HttpException) error).response().errorBody().string();
+                Response response = gson.fromJson(errorBody,Response.class);
+                showSnackBarMessage(response.getMessage());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            showSnackBarMessage("Network Error !");
+        }
+    }
+
+
 
     private void logout() {
 

@@ -70,11 +70,23 @@
         android:id="@+id/btn_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/btn_change_password"
-        android:layout_marginTop="@dimen/button_margin"
+        android:layout_marginTop="22dp"
         android:drawableRight="@drawable/ic_exit"
         android:paddingLeft="@dimen/button_padding"
         android:text="@string/logout"
         tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+    <Button
+        android:id="@+id/btn_LED"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_logout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp"
+        android:background="@android:color/holo_blue_dark"
+        android:text="@string/Led" />
 
 </RelativeLayout>

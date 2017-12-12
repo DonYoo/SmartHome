@@ -105,6 +105,7 @@ var AnroidChangePassword    = require("./resetPassword").AnroidChangePassword;
 var AndroidPostSignup       = require("./signup").AndroidPostSignup;
 var AndroidPostLogin        = require("./login").AndroidPostLogin;
 var AndroidGetProfile       = require("./profile").AndroidGetProfile;
+var AndroidPostHome         = require("./home").AndroidPostHome;
 
     // Android password reset. email the password and get a token.
 router.post('/android/:email/password',	        AnroidResetPassword);
@@ -116,11 +117,13 @@ router.post('/android/signup',                  AndroidPostSignup);
 router.post('/android/login',                   AndroidPostLogin);
 
     // Android profile home
-router.get('/android/profile/:email', checkToken,     AndroidGetProfile);
+router.get('/android/profile/:email', checkToken,       AndroidGetProfile);
 
-router.put('/android/:email', checkToken,       AnroidChangePassword);
+router.put('/android/:email', checkToken,               AnroidChangePassword);
 
-
+// Android RaspControl function
+router.post('/android/control/:email',  checkToken,     AndroidPostHome);
+    
 
 
     // =====================================
@@ -136,6 +139,7 @@ module.exports = router;
 
     // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
+    console.log(req);
     // if user is authenticated in the session, carry on 
     if (req.isAuthenticated())
         return next();
