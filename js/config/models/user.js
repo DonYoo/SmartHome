@@ -1,7 +1,8 @@
 // app/models/user.js
 // load the things we need
-var mongoose = require('mongoose');
+
 var bcrypt   = require('bcrypt-nodejs');
+var mongoose = require('mongoose');
 var credentials = require('../auth');
 
 // JSON
@@ -38,17 +39,19 @@ var userSchema = mongoose.Schema({
     }
 
 });
-
+/*
 var dbUrl = 'mongodb://' + credentials.mongooseDB.host + ':27017/' + credentials.mongooseDB.database;
 //mongoose.Promise = global.Promise;	// this is for removing warnings.
 //var connection = mongoose.createConnection(dbUrl);
 mongoose.Promise = global.Promise;
-mongoose.connect(dbUrl.toString(), {
+mongoose.connect(dbUrl, {
 	useMongoClient: true,		// to satisfy the warning.
 	socketTimeoutMS: 0,
 	keepAlive: true,
 	reconnectTries: 30
   });
+*/
+
 
 // methods ======================
 // generating a hash

@@ -13,6 +13,8 @@ var bodyParser   = require('body-parser');
 var session      = require('express-session');
 var handlebars   = require('express3-handlebars');
 
+var mongoose = require('mongoose');
+var credentials = require('../js/config/auth');
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -28,6 +30,18 @@ Webapplication.js -> index.js -> displayCourses.js - > displayCoursesView.handle
 addCourseView.handlbars -> (post /courses/add )saveCourse 
 -> index.js
 */
+
+
+var dbUrl = 'mongodb://' + credentials.mongooseDB.host + ':27017/' + credentials.mongooseDB.database;
+//mongoose.Promise = global.Promise;	// this is for removing warnings.
+//var connection = mongoose.createConnection(dbUrl);
+mongoose.Promise = global.Promise;
+mongoose.connect(dbUrl, {
+	useMongoClient: true,		// to satisfy the warning.
+	socketTimeoutMS: 0,
+	keepAlive: true,
+	reconnectTries: 30
+  });
 
 
 // setup handlebars view engine
