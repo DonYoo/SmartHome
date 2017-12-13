@@ -19,7 +19,9 @@ var readMessage = function(client) {
 	});
 };
 
-const client = net.connect({port:2000}, 
+const client = new net.Socket();
+
+client.connect(2000,'52.40.177.51',					//{port:2000},
 	function(){
 		console.log("Connected to server");
 		readMessage(client);
