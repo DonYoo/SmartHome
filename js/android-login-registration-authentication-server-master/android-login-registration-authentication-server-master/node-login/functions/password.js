@@ -62,7 +62,6 @@ exports.resetPasswordInit = email =>
 
 			} else {
 				let user = users[0];
-				console.log("coming here 2");
 				const salt = bcrypt.genSaltSync(10);
 				const hash = bcrypt.hashSync(random, salt);
 
@@ -74,7 +73,6 @@ exports.resetPasswordInit = email =>
 		})
 
 		.then(user => {
-			console.log("coming here 3");
 			const transporter = nodemailer.createTransport(`smtps://${config.email}:${config.password}@smtp.gmail.com`);
 
 			const mailOptions = {
@@ -90,22 +88,15 @@ exports.resetPasswordInit = email =>
     			SmartHome.`
     		
 			};
-			console.log("before the sendmail.");
-
 			return transporter.sendMail(mailOptions);
 
 		})
 
 		.then(info => {
-
-			console.log("before error");
-			console.log(info);
 			resolve({ status: 200, message: 'Check mail for instructions' })
 		})
 
 		.catch(err => {
-
-			console.log("at the end here.");
 			console.log(err);
 			reject({ status: 500, message: 'Internal Server Error !' });
 		});

@@ -155,12 +155,10 @@ exports.changePassword = (email, password, newPassword) =>
 		})
 
 		.then(user => {
-			//console.log('here1');
 			resolve({ status: 200, message: 'Password Updated Sucessfully !' })
 		})
 
 		.catch(err => {
-			//console.log('here2');
 			reject({ status: 500, message: 'Internal Server Error !!' })
 		}
 		);
