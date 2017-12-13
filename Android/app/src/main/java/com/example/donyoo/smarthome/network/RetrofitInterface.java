@@ -13,7 +13,6 @@ import retrofit2.http.Path;
 import rx.Observable;
 
 public interface RetrofitInterface {
-
     /*
     Path is for the web address and Body for what is passing to server.
     * */
@@ -39,5 +38,4 @@ public interface RetrofitInterface {
     // 12/12/17 control raspberrypi
     @POST("android/control/{email}")
     Observable<Response> RaspControl(@Path("email") String email);
-
 }

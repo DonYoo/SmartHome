@@ -42,7 +42,8 @@ var userSchema = mongoose.Schema({
 var dbUrl = 'mongodb://' + credentials.mongooseDB.host + ':27017/' + credentials.mongooseDB.database;
 //mongoose.Promise = global.Promise;	// this is for removing warnings.
 //var connection = mongoose.createConnection(dbUrl);
-mongoose.Promise = global.Promise;
+//mongoose.Promise = global.Promise; 12/13/17 this gives error with AWS.
+
 mongoose.connect(dbUrl.toString(), {
 	useMongoClient: true,		// to satisfy the warning.
 	socketTimeoutMS: 0,

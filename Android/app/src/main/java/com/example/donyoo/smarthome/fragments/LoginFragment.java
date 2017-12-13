@@ -43,7 +43,6 @@ import static com.example.donyoo.smarthome.utils.Validation.validateFields;
 public class LoginFragment extends Fragment {
 
     public static final String TAG = LoginFragment.class.getSimpleName();
-
     private EditText mEtEmail;
     private EditText mEtPassword;
     private Button mBtLogin;
@@ -57,7 +56,6 @@ public class LoginFragment extends Fragment {
     private SharedPreferences mSharedPreferences;
 
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,7 +67,6 @@ public class LoginFragment extends Fragment {
     }
 
     private void initViews(View v) {
-
         mEtEmail = (EditText) v.findViewById(R.id.et_email);
         mEtPassword = (EditText) v.findViewById(R.id.et_password);
         mBtLogin = (Button) v.findViewById(R.id.btn_login);
@@ -85,30 +82,23 @@ public class LoginFragment extends Fragment {
     }
 
     private void initSharedPreferences() {
-
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
     }
 
     private void login() {
-
         setError();
-
         String email = mEtEmail.getText().toString();
         String password = mEtPassword.getText().toString();
 
         // 12/5/17 add user json.
         Login login = new Login(email, password);
-
         int err = 0;
-
         if (!validateEmail(email)) {
-
             err++;
             mTiEmail.setError("Email should be valid !");
         }
 
         if (!validateFields(password)) {
-
             err++;
             mTiPassword.setError("Password should not be empty !");
         }
@@ -122,13 +112,11 @@ public class LoginFragment extends Fragment {
     }
 
     private void setError() {
-
         mTiEmail.setError(null);
         mTiPassword.setError(null);
     }
 
     private void loginProcess(Login login) {
-
         mSubscriptions.add(NetworkUtil.getRetrofit().login(login)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -137,9 +125,7 @@ public class LoginFragment extends Fragment {
 
     // this is handler after loginProcess get the response from the server.
     private void handleResponse(Response response) {
-
         mProgressBar.setVisibility(View.GONE);
-
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         Log.d("token", response.getToken());
         editor.putString(Constants.TOKEN,response.getToken());
@@ -152,20 +138,15 @@ public class LoginFragment extends Fragment {
         // bring it to profile page in android
         Intent intent = new Intent(getActivity(), ProfileActivity.class);
         startActivity(intent);
-
     }
 
     // if any error occurs between
     private void handleError(Throwable error) {
-
         mProgressBar.setVisibility(View.GONE);
 
         if (error instanceof HttpException) {
-
             Gson gson = new GsonBuilder().create();
-
             try {
-
                 String errorBody = ((HttpException) error).response().errorBody().string();
                 Response response = gson.fromJson(errorBody,Response.class);
                 showSnackBarMessage(response.getMessage());
@@ -174,22 +155,18 @@ public class LoginFragment extends Fragment {
                 e.printStackTrace();
             }
         } else {
-
             showSnackBarMessage("Network Error !");
         }
     }
 
     private void showSnackBarMessage(String message) {
-
         if (getView() != null) {
-
             Snackbar.make(getView(),message, Snackbar.LENGTH_SHORT).show();
         }
     }
 
     // if register button is clicked
     private void goToRegister(){
-
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         RegisterFragment fragment = new RegisterFragment();
         ft.replace(R.id.fragmentFrame,fragment,RegisterFragment.TAG);
@@ -197,9 +174,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void showDialog(){
-
         ResetPasswordDialog fragment = new ResetPasswordDialog();
-
         fragment.show(getFragmentManager(), ResetPasswordDialog.TAG);
     }
 

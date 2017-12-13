@@ -16,7 +16,9 @@ module.exports.PostSignup =
 module.exports.AndroidPostSignup = function(req, res, next) {
             passport.authenticate('local-signup', function(err, user, info) {
 
-                var returnMessage = req.flash('signupMessage');
+                var returnMessage = req.flash('signupMessage').toString();
+                console.log('signup test:' + returnMessage);
+
                 if (err){
                     console.log("error with authenticate");
                     return next(err);

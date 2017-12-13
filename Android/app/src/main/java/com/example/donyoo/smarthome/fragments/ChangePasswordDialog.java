@@ -32,14 +32,11 @@ import rx.subscriptions.CompositeSubscription;
 import static com.example.donyoo.smarthome.utils.Validation.validateFields;
 
 public class ChangePasswordDialog extends DialogFragment {
-
     public interface Listener {
-
         void onPasswordChanged();
     }
 
     public static final String TAG = ChangePasswordDialog.class.getSimpleName();
-
     private EditText mEtOldPassword;
     private EditText mEtNewPassword;
     private Button mBtChangePassword;
@@ -50,16 +47,13 @@ public class ChangePasswordDialog extends DialogFragment {
     private ProgressBar mProgressBar;
 
     private CompositeSubscription mSubscriptions;
-
     private String mToken;
     private String mEmail;
-
     private Listener mListener;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.dialog_change_password,container,false);
         mSubscriptions = new CompositeSubscription();
         getData();
@@ -68,9 +62,7 @@ public class ChangePasswordDialog extends DialogFragment {
     }
 
     private void getData() {
-
         Bundle bundle = getArguments();
-
         mToken = bundle.getString(Constants.TOKEN);
         mEmail = bundle.getString(Constants.EMAIL);
     }
@@ -82,7 +74,6 @@ public class ChangePasswordDialog extends DialogFragment {
     }
 
     private void initViews(View v) {
-
         mEtOldPassword = (EditText) v.findViewById(R.id.et_old_password);
         mEtNewPassword = (EditText) v.findViewById(R.id.et_new_password);
         mTiOldPassword = (TextInputLayout) v.findViewById(R.id.ti_old_password);
@@ -91,34 +82,27 @@ public class ChangePasswordDialog extends DialogFragment {
         mBtChangePassword = (Button) v.findViewById(R.id.btn_change_password);
         mBtCancel = (Button) v.findViewById(R.id.btn_cancel);
         mProgressBar = (ProgressBar) v.findViewById(R.id.progress);
-
         mBtChangePassword.setOnClickListener(view -> changePassword());
         mBtCancel.setOnClickListener(view -> dismiss());
     }
 
     private void changePassword() {
-
         setError();
-
         String oldPassword = mEtOldPassword.getText().toString();
         String newPassword = mEtNewPassword.getText().toString();
-
         int err = 0;
 
         if (!validateFields(oldPassword)) {
-
             err++;
             mTiOldPassword.setError("Password should not be empty !");
         }
 
         if (!validateFields(newPassword)) {
-
             err++;
             mTiNewPassword.setError("Password should not be empty !");
         }
 
         if (err == 0) {
-
             User user = new User();
             user.setPassword(oldPassword);
             user.setNewPassword(newPassword);
@@ -129,13 +113,11 @@ public class ChangePasswordDialog extends DialogFragment {
     }
 
     private void setError() {
-
         mTiOldPassword.setError(null);
         mTiNewPassword.setError(null);
     }
 
     private void changePasswordProgress(User user) {
-
         mSubscriptions.add(NetworkUtil.getRetrofit(mToken).changePassword(mEmail,user)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -143,7 +125,6 @@ public class ChangePasswordDialog extends DialogFragment {
     }
 
     private void handleResponse(Response response) {
-
         mProgressBar.setVisibility(View.GONE);
         mListener.onPasswordChanged();
         dismiss();
@@ -152,13 +133,10 @@ public class ChangePasswordDialog extends DialogFragment {
     private void handleError(Throwable error) {
 
         mProgressBar.setVisibility(View.GONE);
-
         if (error instanceof HttpException) {
-
             Gson gson = new GsonBuilder().create();
 
             try {
-
                 String errorBody = ((HttpException) error).response().errorBody().string();
                 Response response = gson.fromJson(errorBody,Response.class);
                 showMessage(response.getMessage());
@@ -167,16 +145,13 @@ public class ChangePasswordDialog extends DialogFragment {
                 e.printStackTrace();
             }
         } else {
-
             showMessage("Network Error !");
         }
     }
 
     private void showMessage(String message) {
-
         mTvMessage.setVisibility(View.VISIBLE);
         mTvMessage.setText(message);
-
     }
 
     @Override

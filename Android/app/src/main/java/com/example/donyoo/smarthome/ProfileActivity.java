@@ -68,6 +68,8 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
         mBtLED = (Button) findViewById(R.id.btn_LED);
 
         mBtChangePassword.setOnClickListener(view -> showDialog());
+
+        // 12/7/17
         mBtLogout.setOnClickListener(view -> logout());
 
         //12/12/17
@@ -126,7 +128,6 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
 
 
     private void logout() {
-
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString(Constants.EMAIL,"");
         editor.putString(Constants.TOKEN,"");
@@ -135,19 +136,15 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
     }
 
     private void showDialog(){
-
         ChangePasswordDialog fragment = new ChangePasswordDialog();
-
         Bundle bundle = new Bundle();
         bundle.putString(Constants.EMAIL, mEmail);
         bundle.putString(Constants.TOKEN,mToken);
         fragment.setArguments(bundle);
-
         fragment.show(getFragmentManager(), ChangePasswordDialog.TAG);
     }
 
     private void loadProfile() {
-
         mSubscriptions.add(NetworkUtil.getRetrofit(mToken).getProfile(mEmail)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -155,7 +152,6 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
     }
 
     private void handleResponse(User user) {
-
         mProgressbar.setVisibility(View.GONE);
         mTvName.setText(user.getName());
         mTvEmail.setText(user.getEmail());
@@ -165,13 +161,9 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
     private void handleError(Throwable error) {
 
         mProgressbar.setVisibility(View.GONE);
-
         if (error instanceof HttpException) {
-
             Gson gson = new GsonBuilder().create();
-
             try {
-
                 String errorBody = ((HttpException) error).response().errorBody().string();
                 Response response = gson.fromJson(errorBody,Response.class);
                 showSnackBarMessage(response.getMessage());
@@ -180,13 +172,11 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
                 e.printStackTrace();
             }
         } else {
-
             showSnackBarMessage("Network Error !");
         }
     }
 
     private void showSnackBarMessage(String message) {
-
         Snackbar.make(findViewById(R.id.activity_profile),message, Snackbar.LENGTH_SHORT).show();
 
     }

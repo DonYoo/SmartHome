@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements ResetPasswordDial
     public void loadFragment(){
 
         if (mLoginFragment == null) {
-
             mLoginFragment = new LoginFragment();
         }
         getFragmentManager().beginTransaction().replace(R.id.fragmentFrame,mLoginFragment,LoginFragment.TAG).commit();

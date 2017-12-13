@@ -28,7 +28,7 @@ module.exports.AndroidPostLogin = function(req, res, next) {
             return next(err);
         }
         if(!user){
-            var errormessage = req.flash('loginMessage')[0];
+            var errormessage = req.flash('loginMessage').toString();
             console.log(errormessage);
             return res.status(400).json({ message: errormessage });
         }

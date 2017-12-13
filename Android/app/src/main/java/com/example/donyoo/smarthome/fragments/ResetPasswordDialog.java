@@ -36,7 +36,6 @@ import static com.example.donyoo.smarthome.utils.Validation.validateFields;
 public class ResetPasswordDialog extends DialogFragment {
 
     public interface Listener {
-
         void onPasswordReset(String message);
     }
 
@@ -53,11 +52,8 @@ public class ResetPasswordDialog extends DialogFragment {
     private ProgressBar mProgressBar;
 
     private CompositeSubscription mSubscriptions;
-
     private String mEmail;
-
     private boolean isInit = true;
-
     private Listener mListner;
 
     @Nullable
@@ -70,7 +66,6 @@ public class ResetPasswordDialog extends DialogFragment {
     }
 
     private void initViews(View v) {
-
         mEtEmail = (EditText) v.findViewById(R.id.et_email);
         mEtToken = (EditText) v.findViewById(R.id.et_token);
         mEtPassword = (EditText) v.findViewById(R.id.et_password);
@@ -94,7 +89,6 @@ public class ResetPasswordDialog extends DialogFragment {
     }
 
     private void setEmptyFields() {
-
         mTiEmail.setError(null);
         mTiToken.setError(null);
         mTiPassword.setError(null);
@@ -102,26 +96,20 @@ public class ResetPasswordDialog extends DialogFragment {
     }
 
     public void setToken(String token) {
-
         mEtToken.setText(token);
     }
 
     private void resetPasswordInit() {
-
         setEmptyFields();
-
         mEmail = mEtEmail.getText().toString();
 
         int err = 0;
-
         if (!validateEmail(mEmail)) {
-
             err++;
             mTiEmail.setError("Email Should be Valid !");
         }
 
         if (err == 0) {
-
             mProgressBar.setVisibility(View.VISIBLE);
             resetPasswordInitProgress(mEmail);
         }
@@ -137,21 +125,17 @@ public class ResetPasswordDialog extends DialogFragment {
         int err = 0;
 
         if (!validateFields(token)) {
-
             err++;
             mTiToken.setError("Token Should not be empty !");
         }
 
         if (!validateFields(password)) {
-
             err++;
             mTiEmail.setError("Password Should not be empty !");
         }
 
         if (err == 0) {
-
             mProgressBar.setVisibility(View.VISIBLE);
-
             User user = new User();
             user.setPassword(password);
             user.setToken(token);
@@ -160,7 +144,6 @@ public class ResetPasswordDialog extends DialogFragment {
     }
 
     private void resetPasswordInitProgress(String email) {
-
         mSubscriptions.add(NetworkUtil.getRetrofit().resetPasswordInit(email)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -169,7 +152,6 @@ public class ResetPasswordDialog extends DialogFragment {
     }
 
     private void resetPasswordFinishProgress(User user) {
-
         mSubscriptions.add(NetworkUtil.getRetrofit().resetPasswordFinish(mEmail,user)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -177,11 +159,8 @@ public class ResetPasswordDialog extends DialogFragment {
     }
 
     private void handleResponse(Response response) {
-
         mProgressBar.setVisibility(View.GONE);
-
         if (isInit) {
-
             isInit = false;
             showMessage(response.getMessage());
             mTiEmail.setVisibility(View.GONE);
@@ -189,7 +168,6 @@ public class ResetPasswordDialog extends DialogFragment {
             mTiPassword.setVisibility(View.VISIBLE);
 
         } else {
-
             mListner.onPasswordReset(response.getMessage());
             dismiss();
         }
@@ -198,31 +176,23 @@ public class ResetPasswordDialog extends DialogFragment {
     private void handleError(Throwable error) {
 
         mProgressBar.setVisibility(View.GONE);
-
         if (error instanceof HttpException) {
-
             Gson gson = new GsonBuilder().create();
-
             try {
-
                 String errorBody = ((HttpException) error).response().errorBody().string();
                 Response response = gson.fromJson(errorBody,Response.class);
                 showMessage(response.getMessage());
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
-
             showMessage("Network Error !");
         }
     }
 
     private void showMessage(String message) {
-
         mTvMessage.setVisibility(View.VISIBLE);
         mTvMessage.setText(message);
-
     }
 
     @Override
