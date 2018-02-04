@@ -24,12 +24,12 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".SmartHome"
             android:theme="@style/AppTheme.LoginRegister">
         </activity>
 
         <activity
-            android:name=".SmartHome"
+            android:name=".MainActivity"
             android:theme="@style/AppTheme.LoginRegister"
             android:launchMode="singleTask">
             <intent-filter>

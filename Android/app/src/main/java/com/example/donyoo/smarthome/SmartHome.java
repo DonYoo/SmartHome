@@ -110,17 +110,6 @@ public class SmartHome extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
-
-
-
-
-
-
-
-
-
-
-
     public void sendMessage(View view) {
         EditText editText = (EditText) findViewById(R.id.editText3);
         TextView displayText = (TextView) findViewById(R.id.displayText);
